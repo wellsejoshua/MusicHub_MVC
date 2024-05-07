@@ -5,8 +5,9 @@ using MusicHub.DataAccess.Repository.IRepository;
 using MusicHub.Models;
 
 
-namespace MusicHubWeb.Controllers
+namespace MusicHubWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -46,7 +47,7 @@ namespace MusicHubWeb.Controllers
                 return RedirectToAction(nameof(Index), "Category");
             }
             return View(obj);
-           
+
         }
 
 
@@ -57,8 +58,8 @@ namespace MusicHubWeb.Controllers
             {
                 return NotFound();
             }
-            Category category = _unitOfWork.CategoryRepository.Get(u=>u.Id == id);
-            if(category == null)
+            Category category = _unitOfWork.CategoryRepository.Get(u => u.Id == id);
+            if (category == null)
             {
                 return NotFound();
             }
@@ -85,7 +86,7 @@ namespace MusicHubWeb.Controllers
             {
                 return NotFound();
             }
-            Category category = _unitOfWork.CategoryRepository.Get(u=>u.Id == id);
+            Category category = _unitOfWork.CategoryRepository.Get(u => u.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -95,7 +96,7 @@ namespace MusicHubWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category obj = _unitOfWork.CategoryRepository.Get(u=>u.Id == id);
+            Category obj = _unitOfWork.CategoryRepository.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();

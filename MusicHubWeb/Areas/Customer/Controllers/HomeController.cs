@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using MusicHub.Models;
 using System.Diagnostics;
 
-namespace MusicHubWeb.Controllers
+namespace MusicHubWeb.Areas.Customer.Controllers
 {
+    [Area("Customer")]
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
