@@ -1,21 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MusicHubWeb.Data;
-using MusicHubWeb.Models;
+using MusicHub.DataAccess.Data;
+using MusicHub.DataAccess.Repository;
+using MusicHub.DataAccess.Repository.IRepository;
+using MusicHub.Models;
+
 
 namespace MusicHubWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICategoryRepository _context;
 
-        public CategoryController(ApplicationDbContext context)
+        public CategoryController(ICategoryRepository context)
         {
             _context = context;
         }
 
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _context.Categories.ToList(); ;
+            List<Category> objCategoryList = _context.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -37,8 +40,8 @@ namespace MusicHubWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Categories.Add(obj);
-                _context.SaveChanges();
+                _context.Add(obj);
+                _context.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction(nameof(Index), "Category");
             }
@@ -54,7 +57,7 @@ namespace MusicHubWeb.Controllers
             {
                 return NotFound();
             }
-            Category category = _context.Categories.Find(id);
+            Category category = _context.Get(u=>u.Id == id);
             if(category == null)
             {
                 return NotFound();
@@ -67,8 +70,8 @@ namespace MusicHubWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Categories.Update(obj);
-                _context.SaveChanges();
+                _context.Update(obj);
+                _context.Save();
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction(nameof(Index), "Category");
             }
@@ -82,7 +85,7 @@ namespace MusicHubWeb.Controllers
             {
                 return NotFound();
             }
-            Category category = _context.Categories.Find(id);
+            Category category = _context.Get(u=>u.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -92,14 +95,14 @@ namespace MusicHubWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category obj = _context.Categories.Find(id);
+            Category obj = _context.Get(u=>u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
             
-            _context.Categories.Remove(obj);
-            _context.SaveChanges();
+            _context.Remove(obj);
+            _context.Save();
             TempData["success"] = "Category deleted successfully";
 
             return RedirectToAction(nameof(Index), "Category");
