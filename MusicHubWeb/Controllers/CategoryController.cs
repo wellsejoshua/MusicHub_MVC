@@ -9,16 +9,16 @@ namespace MusicHubWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ICategoryRepository context)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _context.GetAll().ToList();
+            List<Category> objCategoryList = _unitOfWork.CategoryRepository.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -40,8 +40,8 @@ namespace MusicHubWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Add(obj);
-                _context.Save();
+                _unitOfWork.CategoryRepository.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction(nameof(Index), "Category");
             }
@@ -57,7 +57,7 @@ namespace MusicHubWeb.Controllers
             {
                 return NotFound();
             }
-            Category category = _context.Get(u=>u.Id == id);
+            Category category = _unitOfWork.CategoryRepository.Get(u=>u.Id == id);
             if(category == null)
             {
                 return NotFound();
@@ -70,8 +70,8 @@ namespace MusicHubWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(obj);
-                _context.Save();
+                _unitOfWork.CategoryRepository.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction(nameof(Index), "Category");
             }
@@ -85,7 +85,7 @@ namespace MusicHubWeb.Controllers
             {
                 return NotFound();
             }
-            Category category = _context.Get(u=>u.Id == id);
+            Category category = _unitOfWork.CategoryRepository.Get(u=>u.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -95,14 +95,14 @@ namespace MusicHubWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category obj = _context.Get(u=>u.Id == id);
+            Category obj = _unitOfWork.CategoryRepository.Get(u=>u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            
-            _context.Remove(obj);
-            _context.Save();
+
+            _unitOfWork.CategoryRepository.Remove(obj);
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted successfully";
 
             return RedirectToAction(nameof(Index), "Category");

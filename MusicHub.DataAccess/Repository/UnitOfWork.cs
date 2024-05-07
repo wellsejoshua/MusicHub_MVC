@@ -1,6 +1,5 @@
 ﻿using MusicHub.DataAccess.Data;
 using MusicHub.DataAccess.Repository.IRepository;
-using MusicHub.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +8,20 @@ using System.Threading.Tasks;
 
 namespace MusicHub.DataAccess.Repository
 {
-    public class CategoryRepository : Repository<Category>, ICategoryRepository
+    public class UnitOfWork : IUnitOfWork
     {
         private ApplicationDbContext _context;
-        public CategoryRepository(ApplicationDbContext context) : base(context) 
+        public ICategoryRepository CategoryRepository { get; private set; }
+        public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
+            CategoryRepository = new CategoryRepository(_context);
         }
 
-        public void Update(Category obj)
+
+        public void Save()
         {
-            _context.Categories.Update(obj);
+            _context.SaveChanges();
         }
     }
 }
