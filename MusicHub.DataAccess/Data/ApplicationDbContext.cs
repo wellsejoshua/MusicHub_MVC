@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MusicHubWeb.Models;
+using MusicHub.Models;
 
-namespace MusicHubWeb.Data
+namespace MusicHub.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {

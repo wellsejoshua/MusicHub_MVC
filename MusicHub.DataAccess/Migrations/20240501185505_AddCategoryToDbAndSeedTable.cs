@@ -2,10 +2,12 @@
 
 #nullable disable
 
-namespace MusicHubWeb.Migrations
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace MusicHub.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCategoryTableToDb : Migration
+    public partial class AddCategoryToDbAndSeedTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,6 +24,18 @@ namespace MusicHubWeb.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "DisplayOrder", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "Music" },
+                    { 2, 2, "Apparel" },
+                    { 3, 3, "Digital" },
+                    { 4, 4, "Ticket" },
+                    { 5, 5, "Subscription" }
                 });
         }
 

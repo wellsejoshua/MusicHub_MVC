@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
-namespace MusicHubWeb.Models
+namespace MusicHub.Models
 {
     public class Category
     {
