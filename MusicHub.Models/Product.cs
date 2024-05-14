@@ -18,6 +18,7 @@ namespace MusicHub.Models
 
         public int CategoryId { get; set; }
 
+        //Type is physical or digital
         [Required]
         [DisplayName("Type")]
         [MaxLength(100)]
@@ -52,12 +53,12 @@ namespace MusicHub.Models
         public double Price100 { get; set; }
 
         [ValidateNever]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         //Navigation Propeties
         [ForeignKey("CategoryId")]
         [ValidateNever]
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
 
     }
 }

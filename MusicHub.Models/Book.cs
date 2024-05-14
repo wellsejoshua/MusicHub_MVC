@@ -10,10 +10,10 @@ namespace MusicHub.Models
 {
     public class Book : Product
     {
-        [Required]
-        [DisplayName("Title")]
-        [MaxLength(100)]
-        public string? Title { get; set; }
+        //[Required]
+        //[DisplayName("Title")]
+        //[MaxLength(100)]
+        //public string? Title { get; set; }
 
         [Required]
         public string? ISBN { get; set; }
