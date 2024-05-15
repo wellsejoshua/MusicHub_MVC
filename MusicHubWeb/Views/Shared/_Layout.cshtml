@@ -39,9 +39,12 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Categories</a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Products</a>
+                                </li>
                                
                             </ul>
                         </li>
@@ -67,6 +70,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.tiny.cloud/1/0ja18y5c509qm6ke8gy015pgw0z9tf9fqhmfeu3b9l5vtfzg/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

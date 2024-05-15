@@ -29,7 +29,7 @@ a {
 }
 
 a:hover {
-    color: var(--dark);
+    color: red;
 }
 
 img {
@@ -71,6 +71,10 @@ section {
     font-size: 18px;
     margin-left: 5px;
 }
+
+/*.social-links:hover{
+    color:red;
+}*/
 
 @media (max-width: 992px) {
     .navbar {
