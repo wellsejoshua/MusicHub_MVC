@@ -111,38 +111,34 @@ namespace MusicHubWeb.Areas.Admin.Controllers
 
         }
 
-
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> objProductList = _unitOfWork.ProductRepository.GetAll(includeProperties:"Category").ToList();
+            return Json(new {data = objProductList});
+        }
+        //Delete Image and product
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0)
+            Product productToDelete = _unitOfWork.ProductRepository.Get(u=>u.Id == id);
+            if(productToDelete == null)
             {
-                return NotFound();
+                return Json(new {success = false, message = "Error while deleting"});
             }
-            Product product = _unitOfWork.ProductRepository.Get(u => u.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            Product obj = _unitOfWork.ProductRepository.Get(u => u.Id == id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
 
-            _unitOfWork.ProductRepository.Remove(obj);
+            var oldImagePath = Path.Combine(wwwRootPath, productToDelete.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+            _unitOfWork.ProductRepository.Remove(productToDelete);
             _unitOfWork.Save();
-            TempData["success"] = "Product deleted successfully";
-
-            return RedirectToAction(nameof(Index), "Product");
-
+            return Json(new { success = true, message = "Delete Successful" });
 
         }
-
-
+        #endregion
     }
 }
