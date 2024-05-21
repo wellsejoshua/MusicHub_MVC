@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MusicHub.Models
 {
-    public class Single : Product
+    public class MusicSingle : Product
     {
         [Required]
         public string? Artist { get; set; }

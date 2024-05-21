@@ -12,7 +12,19 @@ namespace MusicHub.DataAccess.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Show> Shows { get; set; }
+        public DbSet<MusicSingle> MusicSingles { get; set; }
         public DbSet<Song> Songs { get; set; }
+        
+        
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
