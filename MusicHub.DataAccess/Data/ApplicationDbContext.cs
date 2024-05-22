@@ -11,6 +11,7 @@ namespace MusicHub.DataAccess.Data
 
         }
 
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -22,6 +23,7 @@ namespace MusicHub.DataAccess.Data
         public DbSet<Show> Shows { get; set; }
         public DbSet<MusicSingle> MusicSingles { get; set; }
         public DbSet<Song> Songs { get; set; }
+
         
         
 
