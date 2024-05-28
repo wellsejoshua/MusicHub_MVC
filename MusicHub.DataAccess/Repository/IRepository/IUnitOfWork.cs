@@ -10,6 +10,8 @@ namespace MusicHub.DataAccess.Repository.IRepository
     {
         ICategoryRepository CategoryRepository { get; }
         IProductRepository ProductRepository { get; }
+        IShoppingCartRepository ShoppingCartRepository { get; }
+
 
         void Save();
     }

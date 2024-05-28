@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MusicHub.DataAccess.Data;
 using MusicHub.DataAccess.Repository;
 using MusicHub.DataAccess.Repository.IRepository;
 using MusicHub.Models;
 using MusicHub.Models.ViewModels;
+using MusicHub.Utility;
 
 
 namespace MusicHubWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
