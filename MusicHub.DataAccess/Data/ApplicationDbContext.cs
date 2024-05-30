@@ -34,6 +34,13 @@ namespace MusicHub.DataAccess.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Company>().HasData(
+                new Company { Id = 1, Name = "Tech Central", StreetAddress = "123 Tech Blvd", PhoneNumber = "1111111111", City = "Houston", State = "TX", PostalCode = "77077" },
+                new Company { Id = 2, Name = "Good Books", StreetAddress = "123 Books Blvd", PhoneNumber = "2222222222", City = "Austin", State = "TX", PostalCode = "77877" },
+                new Company { Id = 3, Name = "Shirts R Us", StreetAddress = "123 Shirts Rd", PhoneNumber = "3333333333", City = "Dallas", State = "TX", PostalCode = "77878" }
+
+                );
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Music", DisplayOrder = 1 },
                 new Category { Id = 2, Name = "Apparel", DisplayOrder = 2 },

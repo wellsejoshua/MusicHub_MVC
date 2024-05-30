@@ -9,6 +9,8 @@ namespace MusicHub.DataAccess.Repository.IRepository
     public interface IUnitOfWork
     {
         ICategoryRepository CategoryRepository { get; }
+        ICompanyRepository CompanyRepository { get; }
+
         IProductRepository ProductRepository { get; }
         IShoppingCartRepository ShoppingCartRepository { get; }
 

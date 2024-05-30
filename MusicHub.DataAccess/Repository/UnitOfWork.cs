@@ -12,6 +12,8 @@ namespace MusicHub.DataAccess.Repository
     {
         private ApplicationDbContext _context;
         public ICategoryRepository CategoryRepository { get; private set; }
+        public ICompanyRepository CompanyRepository { get; private set; }
+
         public IProductRepository ProductRepository { get; private set; }
         public IShoppingCartRepository ShoppingCartRepository { get; private set; }
 
@@ -19,6 +21,7 @@ namespace MusicHub.DataAccess.Repository
         {
             _context = context;
             CategoryRepository = new CategoryRepository(_context);
+            CompanyRepository = new CompanyRepository(_context);
             ProductRepository = new ProductRepository(_context);
             ShoppingCartRepository = new ShoppingCartRepository(_context);
 
