@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicHub.DataAccess.Repository.IRepository;
 using MusicHub.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace MusicHubWeb.Areas.Customer.Controllers
 {
@@ -30,8 +32,45 @@ namespace MusicHubWeb.Areas.Customer.Controllers
 
         public IActionResult Details(int id)
         {
-            Product product = _unitOfWork.ProductRepository.Get(u=>u.Id == id, includeProperties: "Category");
-            return View(product);
+            ShoppingCart shoppingCart = new()
+            {
+                Product = _unitOfWork.ProductRepository.Get(u => u.Id == id, includeProperties: "Category"),
+                Count = 1,
+                ProductId = id,
+                Id = 0
+            };
+            
+            return View(shoppingCart);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            shoppingCart.ApplicationUserId = userId;
+            shoppingCart.Id = 0;
+
+            ShoppingCart cartFromDb = _unitOfWork.ShoppingCartRepository.Get(u => u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
+
+            if (cartFromDb != null)
+            {
+                //cart exists
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCartRepository.Update(cartFromDb);
+
+            }
+            else
+            {
+                //add cart
+                _unitOfWork.ShoppingCartRepository.Add(shoppingCart);
+            }
+
+            TempData["success"] = "Cart updated successfully";
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Shop));
         }
         public IActionResult Privacy()
         {
