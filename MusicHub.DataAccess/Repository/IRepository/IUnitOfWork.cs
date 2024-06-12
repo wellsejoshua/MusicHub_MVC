@@ -14,6 +14,8 @@ namespace MusicHub.DataAccess.Repository.IRepository
         IProductRepository ProductRepository { get; }
         IShoppingCartRepository ShoppingCartRepository { get; }
         IApplicationUserRepository ApplicationUserRepository { get; }
+        IOrderDetailRepository OrderDetail { get; }
+        IOrderHeaderRepository OrderHeader { get; }
 
 
 
