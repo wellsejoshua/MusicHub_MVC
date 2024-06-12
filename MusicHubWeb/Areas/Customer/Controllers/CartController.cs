@@ -129,10 +129,24 @@ namespace MusicHubWeb.Areas.Customer.Controllers
                 _unitOfWork.OrderDetail.Add(orderDetail);
                 _unitOfWork.Save();
             }
-            return RedirectToAction(nameof(Index), new { id = ShoppingCartVM.OrderHeader.Id });
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+            { 
+                //it is a regular customer and we need to capture payment
+                //stripe logic
+            }
+
+          
+            return RedirectToAction(nameof(OrderConfirmation), new { id=ShoppingCartVM.OrderHeader.Id });
+        
+
         }
 
-            public IActionResult Plus(int cartId)
+        public IActionResult OrderConfirmation(int id)
+        {
+            return View(id);
+        }
+
+        public IActionResult Plus(int cartId)
         {
             var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(u => u.Id == cartId);
             cartFromDb.Count += 1;
@@ -142,7 +156,15 @@ namespace MusicHubWeb.Areas.Customer.Controllers
 
         }
 
-        public IActionResult Minus(int cartId)
+    
+
+
+
+
+
+
+            //helpers
+            public IActionResult Minus(int cartId)
         {
             var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(u => u.Id == cartId);
             //if count <=1 remove it from cart
