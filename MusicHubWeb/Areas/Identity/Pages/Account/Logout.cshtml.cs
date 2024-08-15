@@ -26,6 +26,7 @@ namespace MusicHubWeb.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
+            //HttpContext.Session.Clear();  Don't need do to addition in view component
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {

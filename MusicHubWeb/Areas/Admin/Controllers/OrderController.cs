@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace MusicHubWeb.Areas.Admin.Controllers
 {
-    [Area("admin")]
+    [Area("Admin")]
     [Authorize]
     public class OrderController : Controller
     {

@@ -221,20 +221,16 @@ namespace MusicHubWeb.Areas.Customer.Controllers
 
         }
 
-    
-
-
-
-
-
 
             //helpers
             public IActionResult Minus(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(u => u.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(u => u.Id == cartId, tracked:true);
             //if count <=1 remove it from cart
             if (cartFromDb.Count <= 1)
             {
+                HttpContext.Session.SetInt32(SD.SessionCart,
+    _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
                 _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
             }
             else
@@ -251,11 +247,14 @@ namespace MusicHubWeb.Areas.Customer.Controllers
 
         public IActionResult Remove(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(u => u.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(u => u.Id == cartId, tracked: true);
             //if count <=1 remove it from cart
-
+            HttpContext.Session.SetInt32(SD.SessionCart,
+                _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
             _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
+            
             _unitOfWork.Save();
+
             return RedirectToAction(nameof(Index));
 
         }
